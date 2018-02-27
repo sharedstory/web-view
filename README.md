@@ -1,1 +1,3 @@
-# web-view
+# SharedStory WebView
+
+This project manages the shared, public web view.
