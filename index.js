@@ -5,8 +5,6 @@ var firebaseSecret = {
     client_email: process.env.FIREBASE_CLIENT_EMAIL
 };
 
-console.log(firebaseSecret);
-
 var firebaseApp = firebaseAdmin.initializeApp({
     credential: firebaseAdmin.credential.cert(firebaseSecret),
     databaseURL: 'https://sharedstory-5edb5.firebaseio.com/'
