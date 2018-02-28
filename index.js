@@ -40,8 +40,8 @@ app.get('/:id', function(request, response) {
 });
 
 app.post('/session/add', function(request, response) {
-    var form = request.body.form;
-    console.log(form);
+    var data = request.body;
+    console.log(data);
     response.status(200).send("OK");
 });
 
