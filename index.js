@@ -1,13 +1,12 @@
 var firebaseAdmin = require('firebase-admin');
 
-console.log(process.env.FIREBASE_PRIVATE_KEY);
-console.log(process.env.FIREBASE_CLIENT_EMAIL);
+var firebaseSecret = {
+    private_key: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n'),
+    client_email: process.env.FIREBASE_CLIENT_EMAIL
+};
 
 firebaseAdmin.initializeApp({
-    credential: firebaseAdmin.credential.cert({
-        private_key: process.env.FIREBASE_PRIVATE_KEY,
-        client_email: process.env.FIREBASE_CLIENT_EMAIL,
-    }),
+    credential: firebaseAdmin.credential.cert(firebaseSecret),
     databaseURL: 'https://sharedstory-5edb5.firebaseio.com/'
 });
 
