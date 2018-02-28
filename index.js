@@ -1,7 +1,10 @@
 var firebaseAdmin = require('firebase-admin');
 
+console.log(process.env.FIREBASE_PRIVATE_KEY);
+console.log(process.env.FIREBASE_CLIENT_EMAIL);
+
 firebaseAdmin.initializeApp({
-    credential: admin.credential.cert({
+    credential: firebaseAdmin.credential.cert({
         private_key: process.env.FIREBASE_PRIVATE_KEY,
         client_email: process.env.FIREBASE_CLIENT_EMAIL,
     }),
