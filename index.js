@@ -39,6 +39,12 @@ app.get('/:id', function(request, response) {
     response.render('pages/index', {id: id});
 });
 
+app.post('/session/add', function(request, response) {
+    var form = request.body.form;
+    console.log(form);
+    response.status(200).send("OK");
+});
+
 app.listen(app.get('port'), function() {
     console.log('Node app is running on port', app.get('port'));
 });
