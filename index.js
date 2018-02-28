@@ -1,5 +1,13 @@
 var firebaseAdmin = require('firebase-admin');
 
+firebaseAdmin.initializeApp({
+    credential: admin.credential.cert({
+        private_key: process.env.FIREBASE_PRIVATE_KEY,
+        client_email: process.env.FIREBASE_CLIENT_EMAIL,
+    }),
+    databaseURL: 'https://sharedstory-5edb5.firebaseio.com/'
+});
+
 var express = require('express');
 var bodyParser = require('body-parser');
 
