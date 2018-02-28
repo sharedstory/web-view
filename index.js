@@ -5,10 +5,14 @@ var firebaseSecret = {
     client_email: process.env.FIREBASE_CLIENT_EMAIL
 };
 
-firebaseAdmin.initializeApp({
+console.log(firebaseSecret);
+
+var firebaseApp = firebaseAdmin.initializeApp({
     credential: firebaseAdmin.credential.cert(firebaseSecret),
     databaseURL: 'https://sharedstory-5edb5.firebaseio.com/'
 });
+
+var db = firebaseApp.database();
 
 var express = require('express');
 var bodyParser = require('body-parser');
@@ -31,6 +35,9 @@ app.get('/', function(request, response) {
 
 app.get('/:id', function(request, response) {
     var id = request.params.id;
+    db.ref('blah').once('value').then(function(snapshot) {
+        console.log(snapshot.val());
+    });
     response.render('pages/index', {id: id});
 });
 
