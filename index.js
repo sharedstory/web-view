@@ -31,6 +31,10 @@ app.get('/', function(request, response) {
     response.render('pages/index', {id: 0});
 });
 
+app.get('/blah', function(request, response) {
+    response.status(200).send("blah");
+});
+
 app.get('/:id', function(request, response) {
     var id = request.params.id;
     db.ref('blah').once('value').then(function(snapshot) {
