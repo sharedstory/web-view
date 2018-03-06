@@ -117,9 +117,9 @@ app.post('/session/add', function(request, response) {
     ];
 
     // Generate a new push ID for the new post
-    var sessionKey = db.child("sessions").push().key();
+    var sessionKey = db.ref("sessions").push().key();
     var markerKeys = [];
-    markerKeys.push(db.child("markers").push().key()); //TODO for multiple markers
+    markerKeys.push(db.ref("markers").push().key()); //TODO for multiple markers
 
     // Create the data we want to update
     var pushData = {};
