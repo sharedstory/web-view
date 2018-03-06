@@ -109,7 +109,6 @@ app.post('/session/add', function(request, response) {
     var map = "stanford";
     var markers = [
         {
-            map: "stanford",
             text: "This is a sample event",
             image: "sample-image.jpg",
             x: 1,
