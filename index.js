@@ -33,6 +33,25 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
 /*
+ * Global variables
+ * ----------------------------------------
+ */
+var MAPS = {
+    sf: {
+        mapName: "San Francisco",
+        mapFile: "sf-map.png",
+    },
+    paloalto: {
+        mapName: "Palo Alto",
+        mapFile: "palo_alto.png",
+    },
+    epa: {
+        mapName: "East Palo Alto",
+        mapFile: "east_palo_alto.png",
+    },
+}
+
+/*
  * Handlers
  * ----------------------------------------
  */
@@ -46,7 +65,11 @@ app.get('/', function(request, response) {
 // Displays aggregated data from database on map
 app.get('/map/:map', function(request, response) {
     var map = request.params.map;
-    response.render('pages/map', {map: map});
+    var mapKey = MAPS[map];
+    response.render('pages/map', {
+        mapName: mapKey.mapName,
+        mapFile: mapKey.mapFile,
+    });
 })
 
 // Displays basic page with id for debugging
