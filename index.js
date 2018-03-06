@@ -1,5 +1,9 @@
-var firebaseAdmin = require('firebase-admin');
+/*
+ * Set up Firebase
+ * ----------------------------------------
+ */
 
+var firebaseAdmin = require('firebase-admin');
 var firebaseSecret = {
     private_key: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n'),
     client_email: process.env.FIREBASE_CLIENT_EMAIL
@@ -12,29 +16,40 @@ var firebaseApp = firebaseAdmin.initializeApp({
 
 var db = firebaseApp.database();
 
+/*
+ * Set up Express.js and related settings
+ * ----------------------------------------
+ */
 var express = require('express');
 var bodyParser = require('body-parser');
 
 var app = express();
-
 app.use(bodyParser.json());
-
 app.set('port', (process.env.PORT || 5000));
-
 app.use(express.static(__dirname + '/public'));
 
 // views is directory for all template files
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
+/*
+ * Handlers
+ * ----------------------------------------
+ */
+
+// TODO
+// Displays project description
 app.get('/', function(request, response) {
     response.render('pages/index', {id: 0});
 });
 
-app.get('/blah', function(request, response) {
-    response.status(200).send("blah");
-});
+// Displays aggregated data from database on map
+app.get('/map/:map', function(request, response) {
+    var map = request.params.map;
+    response.render('pages/map', {map: map});
+})
 
+// Displays basic page with id for debugging
 app.get('/:id', function(request, response) {
     var id = request.params.id;
     db.ref('blah').once('value').then(function(snapshot) {
@@ -43,6 +58,8 @@ app.get('/:id', function(request, response) {
     response.render('pages/index', {id: id});
 });
 
+// TODO
+// Add session data to database
 app.post('/session/add', function(request, response) {
     var data = request.body;
     console.log(data);
