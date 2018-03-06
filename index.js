@@ -113,29 +113,33 @@ app.post('/session/add', function(request, response) {
             image: "sample-image.jpg",
             x: 1,
             y: 2,
-        }
+        },
+        {
+            text: "This is a sample event",
+            image: "sample-image.jpg",
+            x: 1,
+            y: 2,
+        },
     ];
 
-    // Generate a new push ID for the new post
-    var sessionKey = db.ref("sessions").push().key();
-    var markerKeys = [];
-    markerKeys.push(db.ref("markers").push().key()); //TODO for multiple markers
-
-    // Create the data we want to update
     var pushData = {};
-    var markerKeyValues = createHashKeyValues(markerKeys);
-    pushData["sessions/" + sessionKey] = {
-        map: map,
-        markers: markerKeyValues,
-        timestamp: Date.now(),
-    }
-    for (var i in markerKeys) {
+    var sessionKey = db.ref('sessions').push().key;
+    var markerKeys = [];
+
+    for (var i in markers) {
+        markerKeys.push(db.ref("markers").push().key);
         markers[i].session = sessionKey;
         pushData["markers/" + markerKeys[i]] = markers[i];
     }
 
+    pushData['sessions/' + sessionKey] = {
+        map: map,
+        markers: createHashKeyValues(markerKeys),
+        timestamp: Date.now(),
+    }
+
     // Do a deep-path update
-    db.update(pushData, function(error) {
+    db.ref().update(pushData, function(error) {
         if (error) {
             console.log("Error updating data:", error);
         }
