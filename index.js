@@ -59,14 +59,14 @@ var MAPS = {
 // TODO
 // Displays project description
 app.get('/', function(request, response) {
-    response.render('pages/index', {id: 0});
+    response.render('pages/index');
 });
 
 // Displays aggregated data from database on map
 app.get('/map/:map', function(request, response) {
     var map = request.params.map;
     var mapKey = MAPS[map];
-    if (mapKey == null) response.render('pages/index', {id: 0});
+    if (mapKey == null) response.render('pages/index');
     response.render('pages/map', {
         mapName: mapKey.mapName,
         mapFile: mapKey.mapFile,
@@ -79,7 +79,7 @@ app.get('/:id', function(request, response) {
     db.ref('blah').once('value').then(function(snapshot) {
         console.log(snapshot.val());
     });
-    response.render('pages/index', {id: id});
+    response.render('pages/id', {id: id});
 });
 
 // TODO
