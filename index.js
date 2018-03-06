@@ -36,6 +36,7 @@ app.set('view engine', 'ejs');
  * Global variables
  * ----------------------------------------
  */
+
 var MAPS = {
     stanford: {
         mapName: "Stanford",
@@ -52,6 +53,21 @@ var MAPS = {
 }
 
 /*
+ * Helper Methods
+ * ----------------------------------------
+ */
+
+// Given an array of Firebase hashes, returns an object
+// with hashes as keys and true as the value
+function createHashKeyValues(array) {
+    var obj = {};
+    for (var hash in array) {
+        obj[hash] = true;
+    }
+    return obj;
+}
+
+/*
  * Handlers
  * ----------------------------------------
  */
@@ -61,17 +77,6 @@ var MAPS = {
 app.get('/', function(request, response) {
     response.render('pages/index');
 });
-
-// Displays aggregated data from database on map
-app.get('/map/:map', function(request, response) {
-    var map = request.params.map;
-    var mapKey = MAPS[map];
-    if (mapKey == null) response.render('pages/index');
-    response.render('pages/map', {
-        mapName: mapKey.mapName,
-        mapFile: mapKey.mapFile,
-    });
-})
 
 // Displays basic page with id for debugging
 app.get('/:id', function(request, response) {
@@ -83,10 +88,59 @@ app.get('/:id', function(request, response) {
 });
 
 // TODO
+// Displays aggregated data from database on map
+app.get('/map/:map', function(request, response) {
+    var map = request.params.map;
+    var mapKey = MAPS[map];
+    if (mapKey == null) response.render('pages/index');
+    response.render('pages/map', {
+        mapName: mapKey.mapName,
+        mapFile: mapKey.mapFile,
+    });
+})
+
+// TODO
 // Add session data to database
 app.post('/session/add', function(request, response) {
-    var data = request.body;
-    console.log(data);
+    var receivedData = request.body;
+    console.log(receivedData);
+
+    // TODO Parse data
+    var map = "stanford";
+    var markers = [
+        {
+            map: "stanford",
+            text: "This is a sample event",
+            image: "sample-image.jpg",
+            x: 1,
+            y: 2,
+        }
+    ];
+
+    // Generate a new push ID for the new post
+    var sessionKey = db.child("sessions").push().key();
+    var markerKeys = [];
+    markerKeys.push(db.child("markers").push().key()); //TODO for multiple markers
+
+    // Create the data we want to update
+    var pushData = {};
+    var markerKeyValues = createHashKeyValues(markerKeys);
+    pushData["sessions/" + sessionKey] = {
+        map: map,
+        markers: markerKeyValues,
+        timestamp: Date.now(),
+    }
+    for (var i in markerKeys) {
+        markers[i].session = sessionKey;
+        pushData["markers/" + markerKeys[i]] = markers[i];
+    }
+
+    // Do a deep-path update
+    db.update(pushData, function(error) {
+        if (error) {
+            console.log("Error updating data:", error);
+        }
+    });
     response.status(200).send("OK");
 });
 
