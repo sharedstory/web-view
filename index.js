@@ -99,28 +99,10 @@ app.get('/map/:map', function(request, response) {
     });
 })
 
-// TODO
 // Add session data to database
 app.post('/session/add', function(request, response) {
-    var receivedData = request.body;
-    console.log(receivedData);
-
-    // TODO Parse data
-    var map = "stanford";
-    var markers = [
-        {
-            text: "This is a sample event",
-            image: "sample-image.jpg",
-            x: 1,
-            y: 2,
-        },
-        {
-            text: "This is a sample event",
-            image: "sample-image.jpg",
-            x: 1,
-            y: 2,
-        },
-    ];
+    var map = request.body.map;
+    var markers = request.body.markers;
 
     var pushData = {};
     var sessionKey = db.ref('sessions').push().key;
@@ -138,7 +120,6 @@ app.post('/session/add', function(request, response) {
         timestamp: Date.now(),
     }
 
-    // Do a deep-path update
     db.ref().update(pushData, function(error) {
         if (error) {
             console.log("Error updating data:", error);
