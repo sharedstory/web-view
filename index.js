@@ -37,9 +37,9 @@ app.set('view engine', 'ejs');
  * ----------------------------------------
  */
 var MAPS = {
-    sf: {
-        mapName: "San Francisco",
-        mapFile: "sf-map.png",
+    stanford: {
+        mapName: "Stanford",
+        mapFile: "stanford.png",
     },
     paloalto: {
         mapName: "Palo Alto",
@@ -66,6 +66,7 @@ app.get('/', function(request, response) {
 app.get('/map/:map', function(request, response) {
     var map = request.params.map;
     var mapKey = MAPS[map];
+    if (mapKey == null) response.render('pages/index', {id: 0});
     response.render('pages/map', {
         mapName: mapKey.mapName,
         mapFile: mapKey.mapFile,
