@@ -38,6 +38,10 @@ app.set('view engine', 'ejs');
  */
 
 var MAPS = {
+    default: {
+        mapName: "Stanford",
+        mapFile: "stanford.png",
+    },
     stanford: {
         mapName: "Stanford",
         mapFile: "stanford.png",
@@ -72,7 +76,6 @@ function createHashKeyValues(array) {
  * ----------------------------------------
  */
 
-// TODO
 // Displays project description
 app.get('/', function(request, response) {
     response.render('pages/index');
