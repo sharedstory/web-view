@@ -119,6 +119,7 @@ app.post('/session/add', function(request, response) {
         markers: createHashKeyValues(markerKeys),
         timestamp: Date.now(),
     }
+    pushData['maps/' + map + '/' + sessionKey] = true;
 
     db.ref().update(pushData, function(error) {
         if (error) {
