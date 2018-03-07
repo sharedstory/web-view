@@ -81,9 +81,6 @@ app.get('/', function(request, response) {
 // Displays basic page with id for debugging
 app.get('/:id', function(request, response) {
     var id = request.params.id;
-    db.ref('blah').once('value').then(function(snapshot) {
-        console.log(snapshot.val());
-    });
     response.render('pages/id', {id: id});
 });
 
