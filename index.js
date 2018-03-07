@@ -93,6 +93,9 @@ app.get('/map/:map', function(request, response) {
     var map = request.params.map;
     var mapKey = MAPS[map];
     if (mapKey == null) response.render('pages/index');
+    db.ref('maps/' + map).once('value').then(function(snapshot) {
+        console.log(snapshot.val());
+    });
     response.render('pages/map', {
         mapName: mapKey.mapName,
         mapFile: mapKey.mapFile,
