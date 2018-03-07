@@ -32,6 +32,8 @@ app.use(express.static(__dirname + '/public'));
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
+var async = require('async');
+
 /*
  * Global variables
  * ----------------------------------------
@@ -87,18 +89,43 @@ app.get('/:id', function(request, response) {
     response.render('pages/id', {id: id});
 });
 
-// TODO
 // Displays aggregated data from database on map
 app.get('/map/:map', function(request, response) {
     var map = request.params.map;
     var mapKey = MAPS[map];
     if (mapKey == null) response.render('pages/index');
-    db.ref('maps/' + map).once('value').then(function(snapshot) {
-        console.log(snapshot.val());
-    });
-    response.render('pages/map', {
-        mapName: mapKey.mapName,
-        mapFile: mapKey.mapFile,
+    var markerArray = [];
+
+    function getSessionData(s, sessionCallback) {
+        function getMarkerData(m, markerCallback) {
+            db.ref('markers/' + m).once('value').then(function(markerSnapshot) {
+                var marker = markerSnapshot.val();
+                console.log("marker", marker);
+                markerArray.push(marker);
+                markerCallback();
+            });
+        }
+
+        console.log("I has session");
+        db.ref('sessions/' + s).once('value').then(function(sessionSnapshot) {
+            var markers = sessionSnapshot.val().markers;
+            async.each(Object.keys(markers), getMarkerData, function(error) {
+                if (error) console.log("Error while getting marker data", error);
+                sessionCallback();
+            });
+        });
+    }
+
+    db.ref('maps/' + map).once('value').then(function(mapSnapshot) {
+        var sessions = mapSnapshot.val();
+        async.each(Object.keys(sessions), getSessionData, function(error) {
+            if (error) console.log("Error while getting session data", error);
+            response.render('pages/map', {
+                mapName: mapKey.mapName,
+                mapFile: mapKey.mapFile,
+                markers: markerArray,
+            });
+        });
     });
 })
 
