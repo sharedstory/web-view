@@ -62,7 +62,7 @@ var MAPS = {
 function createHashKeyValues(array) {
     var obj = {};
     for (var hash in array) {
-        obj[hash] = true;
+        obj[array[hash]] = true;
     }
     return obj;
 }
