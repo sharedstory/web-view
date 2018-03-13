@@ -1,3 +1,5 @@
+var initialData = require('./initialData.js');
+
 /*
  * Set up Firebase
  * ----------------------------------------
@@ -133,8 +135,19 @@ app.get('/map/:map', function(request, response) {
 app.post('/session/add', function(request, response) {
     var map = request.body.map;
     var markers = request.body.markers;
+    addSession(map, markers);
+    response.status(200).send("OK");
+});
 
-    var pushData = {};
+app.get('/db/add/sample', function(request, response){
+	for (var i in initialData) {
+		addSession(initialData[i].map, initialData[i].markers);
+	}
+	response.render('pages/index');
+});
+
+function addSession(map, markers) {
+	var pushData = {};
     var sessionKey = db.ref('sessions').push().key;
     var markerKeys = [];
 
@@ -156,8 +169,7 @@ app.post('/session/add', function(request, response) {
             console.log("Error updating data:", error);
         }
     });
-    response.status(200).send("OK");
-});
+}
 
 app.listen(app.get('port'), function() {
     console.log('Node app is running on port', app.get('port'));
