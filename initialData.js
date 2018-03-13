@@ -1,5 +1,5 @@
 (function() {
-	var initialData = [
+	var small = [
 		{
 			map: "stanford",
 			markers: [
@@ -24,7 +24,7 @@
 	];
 
 	var models =  {
-		initialData: initialData,
+		small: small,
    };
 
    if( typeof exports !== 'undefined' ) {
