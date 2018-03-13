@@ -4,16 +4,19 @@
 			map: "stanford",
 			markers: [
 				{
+					icon: "home",
 					text: "home",
 					x: 0.3521981,
 					y: 0.64898306,
 				},
 				{
+					icon: "school",
 					text: "dining hall",
 					x: 0.54181635,
 					y: 0.3560664,
 				},
 				{
+					icon: "park",
 					text: "work",
 					x: 0.3668223,
 					y: 0.3746807,
