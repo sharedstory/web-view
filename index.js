@@ -108,7 +108,6 @@ app.get('/map/:map', function(request, response) {
             });
         }
 
-        console.log("I has session");
         db.ref('sessions/' + s).once('value').then(function(sessionSnapshot) {
             var markers = sessionSnapshot.val().markers;
             async.each(Object.keys(markers), getMarkerData, function(error) {
