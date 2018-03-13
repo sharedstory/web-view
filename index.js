@@ -1,4 +1,4 @@
-var initialData = require('./initialData.js');
+var initialData = require('./initialData.js').models;
 
 /*
  * Set up Firebase
@@ -108,7 +108,6 @@ app.get('/map/:map', function(request, response) {
             });
         }
 
-        console.log("I has session");
         db.ref('sessions/' + s).once('value').then(function(sessionSnapshot) {
             var markers = sessionSnapshot.val().markers;
             async.each(Object.keys(markers), getMarkerData, function(error) {
@@ -140,9 +139,9 @@ app.post('/session/add', function(request, response) {
 });
 
 app.get('/db/add/sample', function(request, response){
-	for (var i in initialData) {
-		console.log(initialData[i]);
-		addSession(initialData[i].map, initialData[i].markers);
+	var small = initialData.small;
+	for (var i in small) {
+		addSession(small[i].map, small[i].markers);
 	}
 	response.render('pages/index');
 });
