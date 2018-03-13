@@ -141,6 +141,7 @@ app.post('/session/add', function(request, response) {
 
 app.get('/db/add/sample', function(request, response){
 	for (var i in initialData) {
+		console.log(initialData[i]);
 		addSession(initialData[i].map, initialData[i].markers);
 	}
 	response.render('pages/index');
