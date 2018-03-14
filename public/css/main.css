@@ -9,6 +9,13 @@ body {
 	opacity: .6;
 }
 
+#timeline {
+	position: absolute;
+	bottom: -110px;
+	width: 100%;
+	opacity: .7;
+}
+
 .map-container {
 	position: relative;
 }

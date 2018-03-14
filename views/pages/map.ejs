@@ -10,6 +10,7 @@
 <body>
 	<div class="map-container">
 		<img src="/images/<%- mapFile %>" alt="Map of <%- mapName %>" id="map">
+		<img src="/images/timeline.png" alt="Timeline" id="timeline">
 		<% for(var i=0; i<markers.length; i++) { %>
 			<% var m = markers[i]; %>
 			<div class="icon" data-x="<%- m.x %>" data-y="<%- m.y %>">
@@ -32,9 +33,23 @@
 				});
 			});
 		}
-		window.addEventListener('resize', loadMarkers);
-		window.onload = function() {
+
+		function resizeMap() {
+			var $map = $("#map");
+			var windowRatio = $(window).width()/$(window).height();
+			if (windowRatio > 1.5) {
+				$("#map").height($(window).height());
+			}
+		}
+
+		function recalibrate() {
+			resizeMap();
 			loadMarkers();
+		}
+
+		window.addEventListener('resize', recalibrate);
+		window.onload = function() {
+			recalibrate();
 		};
 	</script>
 </body>
