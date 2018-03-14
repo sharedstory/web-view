@@ -1,14 +1,34 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="/css/main.css">
+	<title>Map of <%- mapName %></title>
 </head>
 
 <body>
-    <h4>Map of <%- mapName %></h4>
-    <img src="/images/<%- mapFile %>" alt="Map of <%- mapName %>">
-    <% for(var i=0; i<markers.length; i++) { %>
-       <p><%- markers[i].x %> <%- markers[i].y %></p>
-    <% } %>
+	<div class="map-container">
+		<img src="/images/<%- mapFile %>" alt="Map of <%- mapName %>" id="map">
+		<% for(var i=0; i<markers.length; i++) { %>
+			<% var m = markers[i]; %>
+			<div class="icon" data-x="<%- m.x %>" data-y="<%- m.y %>">
+				<img src="/images/tiles/<%- m.icon %>.png" id="marker-<%- i %>">
+				<p><%- m.text %></p>
+			</div>
+		<% } %>
+	</div>
+	<script>
+		var $map = $("#map");
+		$(".icon").each(function(i){
+			var left = $(this).data("x") * $map.width() - 25;
+			var top = $(this).data("y") * $map.height() - 25;
+			console.log(left);
+			console.log(top);
+			$(this).offset({
+				left: left,
+				top: top,
+			});
+		});
+	</script>
 </body>
 </html>
