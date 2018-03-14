@@ -19,17 +19,19 @@
 		<% } %>
 	</div>
 	<script>
-		var $map = $("#map");
-		$(".icon").each(function(i){
-			var left = $(this).data("x") * $map.width() - 25;
-			var top = $(this).data("y") * $map.height() - 25;
-			console.log(left);
-			console.log(top);
-			$(this).offset({
-				left: left,
-				top: top,
+		window.onload = function() {
+			var $map = $("#map");
+			$(".icon").each(function(i){
+				var left = $(this).data("x") * $map.width() - 25;
+				var top = $(this).data("y") * $map.height() - 25;
+				console.log(left);
+				console.log(top);
+				$(this).offset({
+					left: left,
+					top: top,
+				});
 			});
-		});
+		};
 	</script>
 </body>
 </html>
