@@ -19,7 +19,7 @@
 		<% } %>
 	</div>
 	<script>
-		window.onload = function() {
+		function loadMarkers() {
 			var $map = $("#map");
 			$(".icon").each(function(i){
 				var left = $(this).data("x") * $map.width() - 25;
@@ -31,6 +31,10 @@
 					top: top,
 				});
 			});
+		}
+		window.addEventListener('resize', loadMarkers);
+		window.onload = function() {
+			loadMarkers();
 		};
 	</script>
 </body>
