@@ -110,23 +110,35 @@ app.get('/map/:map', function(request, response) {
 
         db.ref('sessions/' + s).once('value').then(function(sessionSnapshot) {
             var markers = sessionSnapshot.val().markers;
-            async.each(Object.keys(markers), getMarkerData, function(error) {
-                if (error) console.log("Error while getting marker data", error);
-                sessionCallback();
-            });
+			if (markers) {
+				async.each(Object.keys(markers), getMarkerData, function(error) {
+					if (error) console.log("Error while getting marker data", error);
+					sessionCallback();
+				});
+			} else {
+				sessionCallback();
+			}
         });
     }
 
     db.ref('maps/' + map).once('value').then(function(mapSnapshot) {
         var sessions = mapSnapshot.val();
-        async.each(Object.keys(sessions), getSessionData, function(error) {
-            if (error) console.log("Error while getting session data", error);
-            response.render('pages/map', {
-                mapName: mapKey.mapName,
-                mapFile: mapKey.mapFile,
-                markers: markerArray,
-            });
-        });
+		if (sessions) {
+			async.each(Object.keys(sessions), getSessionData, function(error) {
+				if (error) console.log("Error while getting session data", error);
+				response.render('pages/map', {
+					mapName: mapKey.mapName,
+					mapFile: mapKey.mapFile,
+					markers: markerArray,
+				});
+			});
+		} else {
+			response.render('pages/map', {
+				mapName: mapKey.mapName,
+				mapFile: mapKey.mapFile,
+				markers: [],
+			});
+		}
     });
 })
 
