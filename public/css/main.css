@@ -4,6 +4,23 @@ body {
 	font-family: 'Quicksand', sans-serif;
 }
 
+#homepage {
+/*	text-align: center;*/
+	position: relative;
+}
+
+#homepage #map {
+	opacity: 1;
+	filter: brightness(20%);
+}
+
+#homepage #logo {
+	z-index: 100;
+	position: absolute;
+	top: 30vh;
+	left: 35vw;
+}
+
 #map {
     width: 100%;
 	opacity: .6;
