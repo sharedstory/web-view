@@ -5,21 +5,21 @@
 			markers: [
 				{
 					icon: 11,
-					text: "home",
-					x: 0.3521981,
-					y: 0.64898306,
+					text: "my first dorm",
+					x: 0.8,
+					y: 0.8,
 				},
 				{
-					icon: 12,
-					text: "dining hall",
-					x: 0.54181635,
+					icon: 15,
+					text: "Rainbow Coalition protests, takeover of President’s Office in 1989",
+					x: 0.56181635,
 					y: 0.3560664,
 				},
 				{
-					icon: 16,
-					text: "work",
-					x: 0.3668223,
-					y: 0.3746807,
+					icon: 14,
+					text: "Lake Lagunita stopped becoming artifically filled in late 1990s to preserve wildlife",
+					x: 0.2,
+					y: 0.77,
 				}
 			],
 			timestamp: Date.now(),
