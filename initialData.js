@@ -7,19 +7,19 @@
 					icon: 11,
 					text: "my first dorm",
 					x: 0.8,
-					y: 0.8,
+					y: 0.7,
 				},
 				{
 					icon: 15,
 					text: "Rainbow Coalition protests, takeover of President’s Office in 1989",
-					x: 0.56181635,
+					x: 0.6,
 					y: 0.3560664,
 				},
 				{
 					icon: 14,
 					text: "Lake Lagunita stopped becoming artifically filled in late 1990s to preserve wildlife",
 					x: 0.2,
-					y: 0.85,
+					y: 0.7,
 				}
 			],
 			timestamp: Date.now(),
