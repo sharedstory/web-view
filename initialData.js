@@ -19,7 +19,7 @@
 					icon: 14,
 					text: "Lake Lagunita stopped becoming artifically filled in late 1990s to preserve wildlife",
 					x: 0.2,
-					y: 0.77,
+					y: 0.85,
 				}
 			],
 			timestamp: Date.now(),
